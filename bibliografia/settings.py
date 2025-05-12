@@ -128,4 +128,4 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'teixeiraqugusto@gmail.com'
-EMAIL_HOST_PASSWORD = 'suasenhaouappkey'
+EMAIL_HOST_PASSWORD = 'khki zcmz icgv nank'
