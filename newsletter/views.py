@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
-from .forms import SubscriberForm
 from django.core.mail import send_mail
 from django.conf import settings
+from django.shortcuts import render, redirect
 from .models import Subscriber
+from .forms import SubscriberForm  
+
 
 def subscribe(request):
     if request.method == 'POST':
@@ -11,8 +12,18 @@ def subscribe(request):
             subscriber = form.save()
 
             send_mail(
-                subject='seja bem vindo à nossa newsletter!',
-                message='Obrigado por se inscrever. Em breve você receberá noticias e atualizações do site.',
+                subject='Bem-vindo à nossa newsletter!',
+                message="""Obrigado por se inscrever. Em breve você receberá novidades.
+                
+                Tem novidade fresquinha no ar! 🚀
+                O Eniac preparou algo especial para você:
+
+                ✅ material – Ex: Lançamento de produto
+                ✅ matricula – Ex:  Desconto anual
+                ✅ curso – : Cupons exclusivos para assinantes
+
+                💥 E só quem está nessa lista vai ter acesso antecipado às ofertas da semana!""",
+
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[subscriber.email],
             )
@@ -20,16 +31,9 @@ def subscribe(request):
             return redirect('thank_you')
     else:
         form = SubscriberForm()
+
     return render(request, 'subscribe.html', {'form': form})
-
-
-def send_newsletter(request):
-    subject = 'seu newsletter esta aqui!'
-    message = 'ola estou te enviando essa parada bem maluquinha'
-    recipients = [subscriber.email for subscriber in Subscriber.objects.all()]
-
-    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipients)
-    return redirect('thank_you')
 
 def thank_you(request):
     return render(request, 'thank_you.html')
+
